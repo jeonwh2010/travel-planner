@@ -1237,7 +1237,7 @@ async function claude(prompt, maxT=8192){
   if(!apiKey){ throw new Error('API Key가 없습니다. 새로고침 후 다시 입력해 주세요.'); }
 
   // Gemini 2.0 Flash — 무료, 빠름, 높은 품질
-  const MODEL = 'gemini-2.0-flash';
+  const MODEL = 'gemini-2.5-flash';
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
 
   const r = await fetch(url, {
