@@ -10,17 +10,27 @@
    ROOT VARIABLES & RESET
 ═══════════════════════════════════════════ */
 :root{
-  --navy:#07101f;--navy-mid:#0c1a2e;--navy-card:#101e34;
-  --navy-light:#162440;--navy-border:#1c2d48;
-  --gold:#c9aa52;--gold-light:#e2c97a;--gold-dim:rgba(201,170,82,.14);
-  --white:#ece8dc;--white-dim:#8a9ab5;--white-muted:#3d5470;
-  --green:#3dbf82;--red:#e05050;--blue:#3a7bd5;--purple:#8b5cf6;
-  --border:rgba(255,255,255,.06);--border-gold:rgba(201,170,82,.28);
-  --r:12px;--shadow:0 8px 32px rgba(0,0,0,.45);
+  /* 파스텔 라이트 테마 */
+  --navy:#f7f3ee;--navy-mid:#f0ebe3;--navy-card:#fff8f0;
+  --navy-light:#ede5d8;--navy-border:#d9cfc2;
+  --gold:#b8860b;--gold-light:#d4a017;--gold-dim:rgba(184,134,11,.1);
+  --white:#2d2418;--white-dim:#6b5a45;--white-muted:#a0907a;
+  --green:#2e7d52;--red:#c0392b;--blue:#2563a8;--purple:#6b46c1;
+  --border:rgba(0,0,0,.08);--border-gold:rgba(184,134,11,.25);
+  --r:14px;--shadow:0 6px 24px rgba(0,0,0,.12);
+  /* 폰트 스케일 1.5x */
+  --fs-xs:13.5px;--fs-sm:16.5px;--fs-base:19.5px;--fs-md:22.5px;--fs-lg:28.5px;--fs-xl:48px;
+  /* 도시 파스텔 색상 */
+  --city-1:#e8f4fd;--city-1b:#1a6fa8;  /* 이스탄불 블루 */
+  --city-2:#fef9e7;--city-2b:#d4860a;  /* 파묵칼레 골드 */
+  --city-3:#f0faf4;--city-3b:#1e7e4a;  /* 괴레메 그린 */
+  --city-4:#fdf2f8;--city-4b:#9b2896;  /* 핑크/보라 */
+  --city-5:#fff5f5;--city-5b:#b83232;  /* 레드 */
+  --city-6:#f3f0ff;--city-6b:#5b3dc8;  /* 퍼플 */
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:var(--fs-sm);line-height:1.7;}
 ::selection{background:var(--gold-dim);color:var(--gold-light);}
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
@@ -114,6 +124,149 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);
 .step-item.active .step-num{background:var(--gold);color:var(--navy);border-color:var(--gold);}
 .step-item.done .step-num{background:var(--green);color:white;border-color:var(--green);font-size:11px;}
 .sb-footer{font-size:10.5px;color:#1a2e46;line-height:1.7;margin-top:auto;padding-top:14px;border-top:1px solid rgba(255,255,255,.04);}
+.sb-footer{font-size:var(--fs-xs);color:#7a6650;line-height:1.7;margin-top:auto;padding-top:14px;border-top:1px solid var(--border);}
+
+/* ═══════════════════════════════════════════
+   CITY BACKGROUND WATERCOLOR SYSTEM
+═══════════════════════════════════════════ */
+.bg-layer{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-size:cover;background-position:center;
+  filter:blur(12px) brightness(1.15) saturate(0.5);
+  opacity:0;transition:opacity 1.2s ease, background-image 0.8s ease;
+}
+.bg-layer.visible{opacity:0.22;}
+.app{position:relative;z-index:1;}
+
+/* ═══════════════════════════════════════════
+   FONT SIZE OVERRIDES (1.5x scale)
+═══════════════════════════════════════════ */
+label,.lbl{font-size:var(--fs-xs);}
+input,select,textarea{font-size:var(--fs-sm)!important;padding:13px 16px!important;}
+.chip{font-size:var(--fs-xs)!important;padding:8px 18px!important;}
+.btn{font-size:var(--fs-sm)!important;padding:14px 30px!important;}
+.btn-sm{font-size:var(--fs-xs)!important;padding:8px 16px!important;}
+.step-title{font-size:40px!important;}
+.step-subtitle{font-size:var(--fs-sm)!important;}
+.rcard-name{font-size:var(--fs-sm)!important;}
+.rcard-meta{font-size:var(--fs-xs)!important;}
+.day-hdr{font-size:21px!important;}
+.info-row{font-size:var(--fs-sm)!important;}
+.alarm-lbl{font-size:var(--fs-sm)!important;}
+.alarm-cd{font-size:var(--fs-xs)!important;}
+.place-name{font-size:var(--fs-sm)!important;}
+.place-addr{font-size:var(--fs-xs)!important;}
+.tc-type{font-size:var(--fs-sm)!important;}
+.tc-price{font-size:var(--fs-sm)!important;}
+.tc-time{font-size:var(--fs-xs)!important;}
+
+/* ═══════════════════════════════════════════
+   SIDEBAR — PASTEL
+═══════════════════════════════════════════ */
+.sidebar{background:linear-gradient(180deg,#fffbf5 0%,#f7f1e8 100%);border-right:1px solid #ddd5c8;}
+.logo{color:var(--gold)!important;}
+.step-item{color:#c5b49a!important;}
+.step-item.active{color:var(--gold)!important;border-left-color:var(--gold)!important;}
+.step-item.done{color:var(--green)!important;}
+.step-num{border-color:currentColor!important;}
+.step-item.active .step-num{background:var(--gold)!important;color:white!important;}
+.step-item.done .step-num{background:var(--green)!important;color:white!important;}
+.tz-box{background:rgba(37,99,168,.08)!important;border-color:rgba(37,99,168,.2)!important;}
+.tz-time{color:var(--white)!important;}
+
+/* ═══════════════════════════════════════════
+   CARDS & BOXES — PASTEL
+═══════════════════════════════════════════ */
+.box{background:white!important;border:1px solid var(--border)!important;box-shadow:0 2px 12px rgba(0,0,0,.06)!important;}
+.rcard{background:white!important;border:2px solid var(--border)!important;}
+.rcard.sel{border-color:var(--gold)!important;background:#fffbf0!important;}
+.rcard:hover{border-color:var(--border-gold)!important;}
+.day-block{border-left-color:rgba(184,134,11,.25)!important;}
+.info-section{background:white!important;}
+.rank-section-title{color:var(--white-dim)!important;font-size:var(--fs-xs)!important;}
+
+/* ═══════════════════════════════════════════
+   CITY COLOR BANDS (for day blocks)
+═══════════════════════════════════════════ */
+.city-band-1{background:var(--city-1);border-left:4px solid var(--city-1b)!important;}
+.city-band-2{background:var(--city-2);border-left:4px solid var(--city-2b)!important;}
+.city-band-3{background:var(--city-3);border-left:4px solid var(--city-3b)!important;}
+.city-band-4{background:var(--city-4);border-left:4px solid var(--city-4b)!important;}
+.city-band-5{background:var(--city-5);border-left:4px solid var(--city-5b)!important;}
+.city-band-6{background:var(--city-6);border-left:4px solid var(--city-6b)!important;}
+.city-label-badge{font-size:var(--fs-xs);font-weight:800;padding:4px 12px;border-radius:100px;color:white;}
+
+/* ═══════════════════════════════════════════
+   TRANSPORT CARDS — PASTEL
+═══════════════════════════════════════════ */
+.tcard{background:white!important;border:2px solid #e8e0d4!important;}
+.tc-type{color:var(--white)!important;}
+.transport-section{margin-bottom:32px!important;}
+.ts-hdr{font-size:var(--fs-md)!important;}
+.tc-fatigue{font-size:var(--fs-xs);padding:4px 10px;border-radius:100px;margin-top:6px;display:inline-block;}
+.fat-low{background:#e8f5e9;color:#2e7d52;}
+.fat-mid{background:#fff8e1;color:#a0700a;}
+.fat-high{background:#fce4ec;color:#c0392b;}
+.tc-luggage{font-size:var(--fs-xs);color:#a0907a;margin-top:4px;}
+
+/* ═══════════════════════════════════════════
+   PACKING CHECKLIST
+═══════════════════════════════════════════ */
+.pack-cat{margin-bottom:20px;}
+.pack-cat-title{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:1.5px;
+  font-weight:800;color:var(--gold);margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;padding-bottom:6px;
+  border-bottom:2px solid var(--gold-dim);}
+.pack-item{display:flex;align-items:center;gap:12px;padding:10px 14px;
+  border-radius:10px;cursor:pointer;transition:all .15s;
+  border:1.5px solid var(--border);background:white;margin-bottom:7px;}
+.pack-item:hover{border-color:var(--border-gold);background:#fffbf0;}
+.pack-item.done{opacity:.5;background:#f5f5f5;}
+.pack-item.done .pack-text{text-decoration:line-through;color:var(--white-muted);}
+.pack-checkbox{width:22px;height:22px;border-radius:6px;border:2px solid #c5b49a;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
+.pack-item.done .pack-checkbox{background:var(--green);border-color:var(--green);color:white;}
+.pack-text{font-size:var(--fs-sm);color:var(--white);flex:1;}
+.pack-badge{font-size:11px;padding:2px 8px;border-radius:100px;background:#fef3cd;color:#8a6200;}
+.pack-progress{height:6px;background:#f0e8dc;border-radius:3px;margin-bottom:18px;overflow:hidden;}
+.pack-progress-bar{height:100%;background:linear-gradient(90deg,var(--green),#68d391);border-radius:3px;transition:width .4s;}
+
+/* ═══════════════════════════════════════════
+   WEATHER — PASTEL
+═══════════════════════════════════════════ */
+.weather-box{background:linear-gradient(135deg,#e8f4fd,#dbeef9)!important;border-color:rgba(37,99,168,.25)!important;}
+.w-day{background:rgba(255,255,255,.7)!important;border-color:rgba(37,99,168,.15)!important;}
+.w-day.today{border-color:rgba(37,99,168,.5)!important;background:rgba(37,99,168,.1)!important;}
+.w-dlbl{color:#5a7a99!important;}
+.w-temp{color:#1a3a5c!important;}
+.w-rain{color:#2563a8!important;}
+
+/* ═══════════════════════════════════════════
+   MISC PASTEL FIXES
+═══════════════════════════════════════════ */
+.hint{background:#fffbf0!important;border-color:rgba(184,134,11,.3)!important;color:var(--white-dim)!important;font-size:var(--fs-xs)!important;}
+.stat-box{background:white!important;}
+.stat-val{color:var(--gold)!important;}
+.expense-item{background:white!important;}
+.place-row{background:white!important;}
+.alarm-card{background:white!important;border-color:var(--border)!important;}
+.alarm-card.active-alarm{border-color:rgba(46,125,82,.3)!important;}
+.loading{background:rgba(247,243,238,.96)!important;}
+.ld-title{color:var(--gold)!important;}
+.ld-step.cur{color:var(--white-dim)!important;}
+.ld-step.ok{color:var(--green)!important;}
+.spinner{border-color:var(--gold-dim)!important;border-top-color:var(--gold)!important;}
+.audit-wrap{background:white!important;border-color:rgba(107,70,193,.2)!important;}
+.map-save-btn{background:rgba(37,99,168,.08)!important;border-color:rgba(37,99,168,.2)!important;color:var(--blue)!important;}
+.book-btn{background:rgba(46,125,82,.08)!important;border-color:rgba(46,125,82,.2)!important;color:var(--green)!important;}
+.summary-code{background:#f7f3ee!important;color:var(--white-dim)!important;}
+.budget-num{color:var(--gold)!important;}
+.per-val{color:var(--white)!important;}
+.ex-card{background:#f7f3ee!important;}
+.ex-val{color:var(--gold)!important;}
+.flight-block{background:#f7f3ee!important;}
+.split-box{background:#f0faf4!important;border-color:rgba(46,125,82,.2)!important;}
+.split-amt{color:var(--green)!important;}
 .tz-box{background:rgba(58,123,213,.1);border:1px solid rgba(58,123,213,.25);border-radius:7px;padding:9px 11px;margin-bottom:14px;}
 .tz-label{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:#7db4f0;margin-bottom:4px;font-weight:600;}
 .tz-time{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--white);font-weight:600;}
@@ -516,6 +669,8 @@ button:disabled{opacity:.35;cursor:not-allowed;}
 </div>
 
 <!-- ════════ MAIN APP ════════ -->
+<!-- 수채화 배경 레이어 -->
+<div class="bg-layer" id="bg-layer"></div>
 <div class="app" id="app" style="display:none;">
 
 <aside class="sidebar">
@@ -564,28 +719,14 @@ button:disabled{opacity:.35;cursor:not-allowed;}
 
   <div class="err" id="err-1"></div>
 
-  <!-- 다구간 토글 -->
-  <div class="toggle-row" onclick="toggleMulti()">
-    <div class="tog-track" id="multi-track"><div class="tog-thumb"></div></div>
-    <div class="tog-label">🗺 다구간 여행 활성화 (여러 도시/국가 순서대로 방문)</div>
-  </div>
-  <div id="multi-wrap" style="display:none;margin-bottom:16px;">
-    <div class="lbl" style="margin-bottom:8px;">방문 도시/국가 순서 입력</div>
-    <div class="city-list" id="city-list">
-      <div class="city-row"><div class="city-num">1</div><input type="text" class="multi-inp" placeholder="첫 번째 도시 (예: 도쿄, 일본)"/><button class="btn-icon" onclick="removeCity(this)">✕</button></div>
-      <div class="city-row"><div class="city-num">2</div><input type="text" class="multi-inp" placeholder="두 번째 도시 (예: 오사카, 일본)"/><button class="btn-icon" onclick="removeCity(this)">✕</button></div>
-    </div>
-    <button class="btn btn-ghost btn-sm" onclick="addCity()" style="margin-top:6px;">+ 도시 추가</button>
-  </div>
-
   <div class="form-grid">
     <div class="fg" id="single-origin-wrap">
       <label>출발지 🛫</label>
       <input id="inp-origin" type="text" placeholder="예: 창원, 부산, 서울, 인천..." value="창원"/>
     </div>
     <div class="fg" id="single-wrap">
-      <label>목적지 🌍</label>
-      <input id="inp-dest" type="text" placeholder="예: 도쿄, 파리, 방콕, 발리, 뉴욕..."/>
+      <label>단일 목적지 🌍</label>
+      <input id="inp-dest" type="text" placeholder="예: 도쿄, 파리, 방콕, 이스탄불..."/>
     </div>
     <div class="fg">
       <label>출발 날짜</label>
@@ -597,8 +738,27 @@ button:disabled{opacity:.35;cursor:not-allowed;}
     </div>
     <div class="fg" style="grid-column:1/-1;">
       <label>여행 기간</label>
-      <div id="duration-display" style="font-size:13px;color:var(--gold);padding:6px 0;">날짜를 선택하면 자동 계산됩니다</div>
+      <div id="duration-display" style="font-size:var(--fs-sm);color:var(--gold);padding:6px 0;font-weight:700;">날짜를 선택하면 자동 계산됩니다</div>
     </div>
+
+  <!-- 다구간 토글 — 출발/날짜 이후 배치 -->
+  <div class="box" style="margin-bottom:18px;padding:18px 20px;border:2px solid var(--border-gold)!important;">
+    <div class="toggle-row" onclick="toggleMulti()" style="margin-bottom:0;">
+      <div class="tog-track" id="multi-track"><div class="tog-thumb"></div></div>
+      <div class="tog-label" style="font-size:var(--fs-sm);color:var(--white);font-weight:600;">🗺 다구간 여행 (여러 도시/국가 순서대로 방문)</div>
+    </div>
+    <div id="multi-wrap" style="display:none;margin-top:16px;">
+      <div class="lbl" style="margin-bottom:10px;font-size:var(--fs-xs);">방문 도시/국가 순서 입력</div>
+      <div class="city-list" id="city-list">
+        <div class="city-row"><div class="city-num">1</div><input type="text" class="multi-inp" placeholder="첫 번째 도시 (예: 이스탄불)"/><button class="btn-icon" onclick="removeCity(this)">✕</button></div>
+        <div class="city-row"><div class="city-num">2</div><input type="text" class="multi-inp" placeholder="두 번째 도시 (예: 파묵칼레)"/><button class="btn-icon" onclick="removeCity(this)">✕</button></div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="addCity()" style="margin-top:8px;">+ 도시 추가</button>
+      <div style="margin-top:10px;font-size:var(--fs-xs);color:var(--white-dim);">💡 도시 간 이동수단은 5단계에서 자동 생성됩니다</div>
+    </div>
+  </div>
+
+  <div class="form-grid" style="margin-top:0;">
     <div class="fg full">
       <label>여행자 유형</label>
       <div class="chips" id="chips-traveler">
@@ -996,7 +1156,7 @@ const S = {
   recDests:[], selDests:[],
   itinerary:null, selections:{},
   transport:null, travelInfo:null,
-  weatherData:null, packItems:[],
+  weatherData:null, packItems:[], packCategories:null,
   expenses:[],
   flights:{depDt:null,retDt:null,checkinDt:null,checkoutDt:null,depTerminal:'',retTerminal:''},
   tzOffset:null, tzName:'',
@@ -1093,6 +1253,41 @@ function dismissSplash(){
 ════════════════════════════════════════════════ */
 document.getElementById('audit-grid').innerHTML=AUDITS.map((a,i)=>`<div class="audit-item"><span class="num">${i+1}</span><span class="fix">✅</span><span><strong style="color:var(--white);font-size:11px;">${a[1]}</strong><br><span style="font-size:10px;">기존: ${a[0]}</span></span></div>`).join('');
 
+
+/* ── CITY BACKGROUND SYSTEM ── */
+const CITY_BG = {
+  '이스탄불': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Hagia_Sophia_Mars_2013.jpg/1600px-Hagia_Sophia_Mars_2013.jpg',
+  '파묵칼레': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Pamukkale_2.jpg/1600px-Pamukkale_2.jpg',
+  '괴레메': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Cappadocia_Kapadokya.jpg/1600px-Cappadocia_Kapadokya.jpg',
+  '카파도키아': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Cappadocia_Kapadokya.jpg/1600px-Cappadocia_Kapadokya.jpg',
+  '도쿄': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/1600px-Skyscrapers_of_Shinjuku_2009_January.jpg',
+  '오사카': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dotonbori_Glico_man_sign_retouched.jpg/1600px-Dotonbori_Glico_man_sign_retouched.jpg',
+  '교토': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Fushimi_Inari_Taisha_in_Kyoto%2C_Japan.jpg/1600px-Fushimi_Inari_Taisha_in_Kyoto%2C_Japan.jpg',
+  '파리': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/1600px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg',
+  '방콕': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Wat_Arun_Rajavararam_temple_seen_from_river.jpg/1600px-Wat_Arun_Rajavararam_temple_seen_from_river.jpg',
+  '발리': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Pura_Ulun_Danu_Bratan%2C_Bali.jpg/1600px-Pura_Ulun_Danu_Bratan%2C_Bali.jpg',
+  '싱가포르': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Gardens_by_the_Bay_Supertrees.jpg/1600px-Gardens_by_the_Bay_Supertrees.jpg',
+  '홍콩': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Hong_kong_harbour.jpg/1600px-Hong_kong_harbour.jpg',
+  '뉴욕': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/New_york_times_square-terabass.jpg/1600px-New_york_times_square-terabass.jpg',
+  '런던': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/London_Skyline_%28125508655%29.jpeg/1600px-London_Skyline_%28125508655%29.jpeg',
+  '두바이': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Dubai_Skylines_at_night_%28Pexels_3787839%29.jpg/1600px-Dubai_Skylines_at_night_%28Pexels_3787839%29.jpg',
+};
+
+function setBgForDest(dest){
+  const layer = document.getElementById('bg-layer');
+  if(!layer) return;
+  const destStr = dest || getDestStr() || S.dest || '';
+  const keys = Object.keys(CITY_BG);
+  let url = '';
+  for(const k of keys){
+    if(destStr.includes(k)){ url = CITY_BG[k]; break; }
+  }
+  if(!url){ layer.classList.remove('visible'); return; }
+  layer.style.backgroundImage = `url('${url}')`;
+  layer.classList.add('visible');
+}
+
+
 /* ════════════════════════════════════════════════
    INIT
 ════════════════════════════════════════════════ */
@@ -1171,7 +1366,6 @@ function getDestStr(){
    NAVIGATION
 ════════════════════════════════════════════════ */
 function goTo(n){
-  // Step guard: warn if trying to jump ahead without data
   const needsItinerary=[4,5,6,7,8,9,10];
   if(needsItinerary.includes(n)&&!S.itinerary&&n>3){
     if(!confirm(`아직 일정이 생성되지 않았습니다. 단계를 건너뛰시겠습니까?\n(일부 데이터가 표시되지 않을 수 있습니다)`))return;
@@ -1180,6 +1374,8 @@ function goTo(n){
   document.getElementById(`step-${n}`).classList.add('active');
   for(let i=1;i<=10;i++){const nav=document.getElementById(`nav-${i}`);nav.className='step-item'+(i<n?' done':i===n?' active':'');}
   window.scrollTo(0,0);
+  // 배경 이미지 업데이트
+  setBgForDest(S.dest||getDestStr());
   if(n===6)buildMap();
   if(n===7){if(!S.weatherData&&S.dest&&S.date)fetchWeather();}
   if(n===10)buildSummary();
@@ -1534,7 +1730,8 @@ async function reqNotif(){const p=await Notification.requestPermission();if(p===
 // weatherTimer declared at top
 function scheduleWeather(){clearTimeout(weatherTimer);weatherTimer=setTimeout(fetchWeather,900);}
 async function fetchWeather(){
-  const dest=document.getElementById('inp-dest').value.trim()||getDestStr().split('→')[0].trim();
+  const destRaw=getDestStr()||document.getElementById('inp-dest').value.trim();
+  const dest=destRaw.split('→')[0].trim()||destRaw;
   const date=document.getElementById('inp-date').value;
   if(!dest||!date)return;
   document.getElementById('weather-content').innerHTML='<div style="color:var(--white-dim);font-size:12px;">🌐 날씨 로딩 중...</div>';
@@ -1546,7 +1743,7 @@ async function fetchWeather(){
     if(!gd.results?.length){document.getElementById('weather-content').innerHTML=`<div style="color:var(--white-dim);font-size:12px;">위치를 찾을 수 없습니다 (영어 도시명으로 시도: ${cn})</div>`;return;}
     const loc=gd.results[0];
     S.weatherData={lat:loc.latitude,lng:loc.longitude,city:loc.name};
-    const days=Math.min(S.duration||7,16);
+    const days=Math.min(S.duration||7,14);  // cap at 14 to stay within 16-day API limit
     const end=new Date(date);end.setDate(end.getDate()+days-1);
     const endStr=end.toISOString().split('T')[0];
     const wr=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${loc.latitude}&longitude=${loc.longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_mean,windspeed_10m_max&timezone=auto&start_date=${date}&end_date=${endStr}&forecast_days=16`);
@@ -1557,8 +1754,15 @@ async function fetchWeather(){
 }
 
 function renderWeather(wd,city){
-  if(!wd.daily){return;}
+  if(!wd||!wd.daily||!wd.daily.time||!wd.daily.temperature_2m_max){
+    document.getElementById('weather-content').innerHTML='<div style="color:#c0392b;font-size:var(--fs-xs);">⚠ 날씨 정보를 불러올 수 없습니다. 여행 기간이 16일 이내인지 확인하거나 새로고침 버튼을 눌러주세요.</div>';
+    return;
+  }
   const{time,weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_mean,windspeed_10m_max}=wd.daily;
+  if(!time.length||!temperature_2m_max.length){
+    document.getElementById('weather-content').innerHTML='<div style="color:#a0700a;font-size:var(--fs-xs);">날씨 데이터가 비어있습니다.</div>';
+    return;
+  }
   const today=new Date().toISOString().split('T')[0];
   let html='<div class="w-days">';
   time.forEach((d,i)=>{
@@ -1576,27 +1780,166 @@ function renderWeather(wd,city){
 }
 
 function buildPackItems(wd){
+  if(!wd||!wd.daily||!wd.daily.temperature_2m_max)return;
   const{temperature_2m_max,temperature_2m_min,precipitation_probability_mean,windspeed_10m_max}=wd.daily;
   const avgMax=Math.round(temperature_2m_max.reduce((a,b)=>a+b,0)/temperature_2m_max.length);
   const maxRain=Math.max(...precipitation_probability_mean.map(v=>v??0));
-  const isHot=avgMax>=28,isCold=avgMax<12,hasRain=maxRain>35,isWind=Math.max(...(windspeed_10m_max||[]).map(v=>v??0))>30,hasSnow=temperature_2m_min.some(t=>t<2);
-  const baseItems=['여권 & 사본 📄','항공권 프린트 ✈️','여행자보험증서 📋','신용카드 (해외결제용) 💳','현금 (현지 통화) 💵','보조배터리 🔋','충전기 & 멀티어댑터 🔌','상비약 (해열제·지사제·소화제) 💊','세면도구 & 소형 화장품 🧴','선글라스 🕶️','자물쇠 (게스트하우스 대비) 🔒'];
-  if(hasRain)baseItems.push('접이식 우산 ☂️','방수 우비 🧥');
-  if(isHot)baseItems.push('선크림 SPF50+ ☀️','쿨링 스프레이 💨','반팔 & 반바지 👕','모자 🧢');
-  if(isCold)baseItems.push('패딩 코트 🧥','목도리 & 장갑 🧣','핫팩 🔥','방한 내의 👖');
-  if(hasSnow)baseItems.push('방한 부츠 🥾','기모 레깅스 👖');
-  if(isWind)baseItems.push('바람막이 재킷 🌬');
-  baseItems.push('현지 유심 / eSIM 📱','여행용 멀티플러그 🔌','긴급 연락처 메모 📝','여행용 잠금장치 🔐');
-  // Preserve existing custom items (added by user), only replace non-custom base items
-  const customItems=S.packItems.filter(p=>!baseItems.some(b=>b===p)&&p.includes('✎'));
-  S.packItems=[...new Set(baseItems),...customItems];
-  renderPackTags();
+  const isHot=avgMax>=28,isCold=avgMax<12,hasRain=maxRain>35;
+  const isWind=Math.max(...(windspeed_10m_max||[]).map(v=>v??0))>30;
+  const hasSnow=temperature_2m_min.some(t=>t<2);
+
+  // 카테고리별 체크리스트
+  S.packCategories = [
+    {
+      id:'docs', icon:'📄', title:'서류 & 결제',
+      items:[
+        {text:'여권 (유효기간 6개월 이상)', required:true},
+        {text:'여권 사본 (분실 대비)', required:true},
+        {text:'항공권 프린트 / 앱', required:true},
+        {text:'여행자보험 증서', required:true},
+        {text:'해외결제 신용카드', required:true},
+        {text:'현지 통화 현금', required:true},
+        {text:'비자 서류 (필요 시)', required:false},
+        {text:'국제운전면허증 (렌터카 시)', required:false},
+      ]
+    },
+    {
+      id:'digital', icon:'📱', title:'전자기기',
+      items:[
+        {text:'스마트폰 + 충전기', required:true},
+        {text:'멀티어댑터 (국가별)', required:true},
+        {text:'보조배터리', required:true},
+        {text:'현지 유심 / eSIM', required:true},
+        {text:'카메라 + 메모리카드', required:false},
+        {text:'노트북 / 태블릿', required:false},
+        {text:'이어폰', required:false},
+      ]
+    },
+    {
+      id:'clothes', icon:'👕', title:'의류 & 신발',
+      items:[
+        ...(isHot?[
+          {text:'반팔 티셔츠 (여러 벌)', required:true},
+          {text:'반바지 / 얇은 팬츠', required:true},
+          {text:'편한 샌들', required:true},
+          {text:'모자 (자외선 차단)', required:true},
+        ]:[]),
+        ...(isCold?[
+          {text:'패딩 코트 / 두꺼운 재킷', required:true},
+          {text:'목도리 & 장갑', required:true},
+          {text:'방한 내의 (기모)', required:true},
+          {text:'워커 / 방한 신발', required:true},
+          {text:'핫팩', required:false},
+        ]:[]),
+        ...(!isHot&&!isCold?[
+          {text:'긴팔 셔츠 / 가디건', required:true},
+          {text:'얇은 재킷 / 점퍼', required:true},
+          {text:'편한 운동화', required:true},
+        ]:[]),
+        ...(hasRain?[
+          {text:'접이식 우산', required:true},
+          {text:'방수 재킷 / 우비', required:true},
+          {text:'방수 신발 / 방수 스프레이', required:false},
+        ]:[]),
+        ...(hasSnow?[
+          {text:'방한 부츠', required:true},
+          {text:'기모 레깅스', required:true},
+        ]:[]),
+        ...(isWind?[
+          {text:'바람막이 재킷', required:true},
+        ]:[]),
+      ]
+    },
+    {
+      id:'health', icon:'💊', title:'건강 & 의약품',
+      items:[
+        {text:'상비약 (해열제, 소화제, 지사제)', required:true},
+        {text:'파스 / 진통제', required:true},
+        {text:'감기약', required:true},
+        {text:'개인 처방약 (충분한 양)', required:true},
+        {text:'밴드 / 소독약', required:false},
+        ...(isHot?[{text:'선크림 SPF50+ (충분히)', required:true},{text:'쿨링 스프레이', required:false}]:[]),
+        {text:'모기 기피제 (동남아/열대)', required:false},
+        {text:'멀미약 (이동이 많은 경우)', required:false},
+      ]
+    },
+    {
+      id:'hygiene', icon:'🧴', title:'세면 & 위생',
+      items:[
+        {text:'세면도구 세트', required:true},
+        {text:'치약 & 칫솔', required:true},
+        {text:'화장품 (소용량)', required:false},
+        {text:'면도기', required:false},
+        {text:'손세정제 / 물티슈', required:true},
+        {text:'마스크', required:true},
+        {text:'생리용품 (필요 시)', required:false},
+      ]
+    },
+    {
+      id:'misc', icon:'🔧', title:'기타 필수품',
+      items:[
+        {text:'여행용 자물쇠', required:true},
+        {text:'긴급 연락처 메모 (사진으로도 저장)', required:true},
+        {text:'여행 가방 네임태그', required:false},
+        {text:'압축팩 (짐 정리)', required:false},
+        {text:'여행용 세탁 세제 (장기여행)', required:false},
+        {text:'가이드북 / 오프라인 지도', required:false},
+        {text:'현지 음식 알레르기 번역 카드', required:false},
+      ]
+    }
+  ];
+
+  // Convert to flat S.packItems for compatibility + render
+  renderPackChecklist();
   saveState();
 }
 
+function renderPackChecklist(){
+  const cats = S.packCategories;
+  if(!cats||!cats.length){ renderPackTags(); return; }
+
+  const doneSet = new Set(JSON.parse(localStorage.getItem('tm_pack_done2')||'[]'));
+  let totalItems = 0, doneItems = 0;
+  cats.forEach(c=>{ c.items.forEach(it=>{ totalItems++; if(doneSet.has(c.id+'_'+it.text)) doneItems++; }); });
+  const pct = totalItems>0?Math.round(doneItems/totalItems*100):0;
+
+  const container = document.getElementById('pack-tags');
+  if(!container) return;
+
+  let html = `<div class="pack-progress"><div class="pack-progress-bar" style="width:${pct}%"></div></div>
+    <div style="font-size:var(--fs-xs);color:var(--white-dim);margin-bottom:16px;">
+      준비 완료: <strong style="color:var(--green);">${doneItems}/${totalItems}개</strong> (${pct}%)
+    </div>`;
+
+  cats.forEach(cat=>{
+    html += `<div class="pack-cat">
+      <div class="pack-cat-title">${cat.icon} ${cat.title}</div>`;
+    cat.items.forEach(item=>{
+      const key = cat.id+'_'+item.text;
+      const isDone = doneSet.has(key);
+      html += `<div class="pack-item${isDone?' done':''}" onclick="togglePackItem('${key}')">
+        <div class="pack-checkbox">${isDone?'✓':''}</div>
+        <span class="pack-text">${item.text}</span>
+        ${item.required?'<span class="pack-badge">필수</span>':''}
+      </div>`;
+    });
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function togglePackItem(key){
+  let done = JSON.parse(localStorage.getItem('tm_pack_done2')||'[]');
+  if(done.includes(key)) done=done.filter(k=>k!==key);
+  else done.push(key);
+  localStorage.setItem('tm_pack_done2', JSON.stringify(done));
+  renderPackChecklist();
+}
+
 function renderPackTags(){
+  // fallback if no categories yet
   const done=JSON.parse(localStorage.getItem('tm_pack_done')||'[]');
-  document.getElementById('pack-tags').innerHTML=S.packItems.map((p,i)=>`<span class="pack-tag${done.includes(i)?' del':''}" onclick="togglePack(${i})" title="클릭: 완료/취소 · 우클릭: 삭제" oncontextmenu="removePack(event,${i})">${p}</span>`).join('');
+  document.getElementById('pack-tags').innerHTML=S.packItems.map((p,i)=>`<div class="pack-item${done.includes(i)?' done':''}" onclick="togglePack(${i})"><div class="pack-checkbox">${done.includes(i)?'✓':''}</div><span class="pack-text">${p.replace(' ✎','')}</span></div>`).join('');
 }
 function togglePack(i){
   let done=JSON.parse(localStorage.getItem('tm_pack_done')||'[]');
@@ -1605,10 +1948,15 @@ function togglePack(i){
 }
 function removePack(e,i){e.preventDefault();S.packItems.splice(i,1);renderPackTags();}
 function addPackItem(){
+  // Add to custom category
   const v=document.getElementById('pack-add-inp').value.trim();
   if(!v)return;
-  S.packItems.push(v+' ✎');  // ✎ marks user-added custom items
-  renderPackTags();saveState();
+  if(!S.packCategories) S.packCategories=[];
+  const miscCat = S.packCategories.find(c=>c.id==='misc')||S.packCategories[S.packCategories.length-1];
+  if(miscCat) miscCat.items.push({text:v,required:false});
+  else S.packItems.push(v+' ✎');
+  renderPackChecklist();
+  saveState();
   document.getElementById('pack-add-inp').value='';
 }
 
@@ -1731,30 +2079,65 @@ DAY 번호는 전체 여행 기준으로 기재 (예: 2번째 청크면 DAY 6부
 ════════════════════════════════════════════════ */
 function step4Next(){goTo(5);}
 async function fetchTransport(){
-  if(!S.itinerary)return;
-  const transitions=[];
-  S.itinerary.forEach((d,i)=>{if(i>0&&d.city&&d.city!==S.itinerary[i-1].city)transitions.push({from:S.itinerary[i-1].city,to:d.city});});
-  const uniqueT=[...new Map(transitions.map(t=>[`${t.from}→${t.to}`,t])).values()];
-  if(!uniqueT.length){document.getElementById('transport-wrap').innerHTML='<div style="color:var(--white-dim);font-size:13px;">단일 도시 여행입니다. 도시 내 교통은 필수 정보 섹션에서 확인하세요.</div>';return;}
-  document.getElementById('transport-wrap').innerHTML='<div style="color:var(--white-dim);font-size:12px;">AI 이동수단 분석 중...</div>';
-  try{
-    const res=await claude(`
-다음 이동 구간들에 대해 각각 이동수단 3가지를 추천하세요.
-구간: ${uniqueT.map(t=>`${t.from} → ${t.to}`).join(', ')}
+  // 다구간 도시 쌍 수집 — itinerary 도시명 + 입력된 다구간 도시 모두 사용
+  const citySegments = [];
 
-JSON:
-{
-  "routes":[
-    {
-      "from":"출발 도시","to":"도착 도시",
-      "options":[
-        {"type":"이동수단 (예: 신칸센/비행기/버스)","icon":"🚄","duration":"약 2시간 30분","priceKRW":"약 5~8만원","pros":["장점1","장점2"],"cons":["단점1"],"note":"예약 팁 또는 주의사항","bookingUrl":"https://..."}
-      ]
+  if(S.isMulti){
+    // 입력된 다구간 도시들을 순서대로 사용 (가장 정확)
+    const multiInputs = [...document.querySelectorAll('#city-list .multi-inp')]
+      .map(inp=>inp.value.trim()).filter(Boolean);
+    for(let i=0;i<multiInputs.length-1;i++){
+      citySegments.push({from:multiInputs[i], to:multiInputs[i+1]});
     }
-  ]
-}`,4096);
-    S.transport=res.routes||[];renderTransport();
-  }catch(e){document.getElementById('transport-wrap').innerHTML=`<div style="color:#f09090;font-size:12px;">이동수단 정보 로드 실패: ${e.message}</div>`;}
+  } else if(S.itinerary){
+    // 단일 목적지이지만 itinerary에서 도시 전환 감지
+    S.itinerary.forEach((d,i)=>{
+      if(i>0&&d.city&&d.city!==S.itinerary[i-1].city){
+        const seg={from:S.itinerary[i-1].city,to:d.city};
+        const key=`${seg.from}→${seg.to}`;
+        if(!citySegments.find(s=>`${s.from}→${s.to}`===key))
+          citySegments.push(seg);
+      }
+    });
+  }
+
+  if(!citySegments.length){
+    document.getElementById('transport-wrap').innerHTML=
+      '<div style="color:var(--white-dim);font-size:var(--fs-sm);padding:16px;">단일 도시 여행이거나 도시 간 이동이 없습니다.<br>현지 교통은 8단계 여행 필수 정보에서 확인하세요.</div>';
+    return;
+  }
+
+  document.getElementById('transport-wrap').innerHTML=
+    '<div style="color:var(--white-dim);font-size:var(--fs-sm);">🔄 AI 이동수단 분석 중...</div>';
+
+  try{
+    // 구간별 순차 생성 (각 구간 독립 요청 → 정확도↑)
+    const allRoutes = [];
+    for(const seg of citySegments){
+      const res = await claude(`
+[지시사항] JSON만 반환. 다른 텍스트 없이.
+
+이동 구간: ${seg.from} → ${seg.to}
+출발일 기준: ${S.date}
+여행자: ${travelerLbl(S.traveler)} ${S.count}명
+
+이 구간의 최적 이동수단 3가지를 추천 우선순위로 제공하세요.
+각 수단은 아래 모든 필드를 포함해야 합니다.
+
+{"from":"${seg.from}","to":"${seg.to}","options":[
+  {"rank":1,"type":"이동수단명","icon":"🚄","duration":"이동시간","priceKRW":"가격(만원)","transfer":"환승 여부 및 방법","pros":["장점1","장점2"],"cons":["단점1","단점2"],"warning":"여행자 주의사항","luggageDifficulty":"수하물 난이도: 쉬움/보통/어려움","fatigueLevel":"피로도: 낮음/보통/높음","fatigueReason":"피로도 이유","bookingTip":"예약 팁","bookingUrl":"예약 사이트 URL"},
+  {"rank":2,...},
+  {"rank":3,...}
+]}`, 4096);
+      if(res.options) allRoutes.push({from:seg.from,to:seg.to,options:res.options});
+      else if(res.from) allRoutes.push(res);
+    }
+    S.transport = allRoutes;
+    renderTransport();
+  }catch(e){
+    document.getElementById('transport-wrap').innerHTML=
+      `<div style="color:#c0392b;font-size:var(--fs-sm);">이동수단 정보를 불러오지 못했습니다: ${e.message}</div>`;
+  }
 }
 
 /* ════════════════════════════════════════════════
@@ -1848,10 +2231,13 @@ function addCustomDest(){
 function renderItinerary(){
   const wrap=document.getElementById('itinerary-wrap');wrap.innerHTML='';
   if(!S.itinerary)return;
+  const cityOrder=[];const getCityIdx=c=>{if(!c)return 0;const ix=cityOrder.indexOf(c);if(ix>=0)return ix;cityOrder.push(c);return cityOrder.length-1;};
   S.itinerary.forEach((day,di)=>{
     const dayN=di+1;
+    const cityIdx=getCityIdx(day.city);
     const block=document.createElement('div');
-    block.className='day-block';block.id=`day-${dayN}`;
+    const bandClass='city-band-'+((cityIdx%6)+1);
+    block.className='day-block '+bandClass;block.id=`day-${dayN}`;
     block.draggable=true;block.dataset.day=dayN;
     block.innerHTML=`
       <div class="day-hdr">
@@ -1969,24 +2355,45 @@ function setupDrag(wrap){
    RENDER: TRANSPORT
 ════════════════════════════════════════════════ */
 function renderTransport(){
-  if(!S.transport?.length){document.getElementById('transport-wrap').innerHTML='<div style="color:var(--white-dim);font-size:13px;">단일 도시 여행 또는 이동수단 정보 없음</div>';return;}
-  document.getElementById('transport-wrap').innerHTML=S.transport.map(route=>`
-    <div class="transport-section">
-      <div class="ts-hdr">🗺 <span class="ts-route">${route.from} → ${route.to}</span></div>
+  if(!S.transport?.length){
+    document.getElementById('transport-wrap').innerHTML=
+      '<div style="color:var(--white-dim);font-size:var(--fs-sm);">이동수단 정보 없음</div>';
+    return;
+  }
+  const cityColors=['var(--city-1b)','var(--city-2b)','var(--city-3b)','var(--city-4b)','var(--city-5b)','var(--city-6b)'];
+  const fatClass={'낮음':'fat-low','보통':'fat-mid','높음':'fat-high'};
+
+  document.getElementById('transport-wrap').innerHTML = S.transport.map((route,ri)=>{
+    const color = cityColors[ri % cityColors.length];
+    return `<div class="transport-section">
+      <div class="ts-hdr" style="color:${color};">
+        🗺 <span class="ts-route" style="background:${color}20;border:1px solid ${color}40;color:${color};">${route.from} → ${route.to}</span>
+        <span style="font-size:var(--fs-xs);color:var(--white-dim);">추천 이동수단 ${(route.options||[]).length}가지</span>
+      </div>
       <div class="transport-cards">
-        ${(route.options||[]).map(opt=>`
-          <div class="tcard">
+        ${(route.options||[]).map((opt,oi)=>{
+          const rankLabel=['🥇 1순위 추천','🥈 2순위','🥉 3순위'][oi]||'';
+          const fatKey=opt.fatigueLevel?.includes('낮')?'낮음':opt.fatigueLevel?.includes('높')?'높음':'보통';
+          const fatCls=fatClass[fatKey]||'fat-mid';
+          return `<div class="tcard" style="border-top:4px solid ${color}!important;">
+            <div style="font-size:var(--fs-xs);font-weight:800;color:${color};margin-bottom:8px;">${rankLabel}</div>
             <div class="tc-icon">${opt.icon||'🚆'}</div>
             <div class="tc-type">${opt.type}</div>
             <div class="tc-price">💰 ${opt.priceKRW}</div>
             <div class="tc-time">⏱ ${opt.duration}</div>
-            <div class="tc-pros">✅ ${(opt.pros||[]).join(' / ')}</div>
-            <div class="tc-cons">⚠ ${(opt.cons||[]).join(' / ')}</div>
-            ${opt.note?`<div style="font-size:10px;color:var(--gold-light);margin-top:5px;">💡 ${opt.note}</div>`:''}
-            ${opt.bookingUrl?`<a href="${opt.bookingUrl}" target="_blank" class="book-btn" style="margin-top:7px;display:inline-flex;">🔗 예약하기</a>`:''}
-          </div>`).join('')}
+            ${opt.transfer?`<div style="font-size:var(--fs-xs);color:var(--blue);margin-top:4px;">🔄 ${opt.transfer}</div>`:''}
+            <div class="tc-pros">✅ ${(opt.pros||[]).join(' · ')}</div>
+            <div class="tc-cons">⚠ ${(opt.cons||[]).join(' · ')}</div>
+            ${opt.warning?`<div style="font-size:var(--fs-xs);background:#fff8e1;border:1px solid #f0d060;border-radius:7px;padding:6px 10px;margin-top:6px;color:#8a6200;">📌 ${opt.warning}</div>`:''}
+            <div class="tc-luggage">🧳 수하물 난이도: <strong>${opt.luggageDifficulty||'—'}</strong></div>
+            <div class="tc-fatigue ${fatCls}">💪 피로도: ${opt.fatigueLevel||'—'} ${opt.fatigueReason?'— '+opt.fatigueReason:''}</div>
+            ${opt.bookingTip?`<div style="font-size:var(--fs-xs);color:var(--blue);margin-top:6px;">💡 ${opt.bookingTip}</div>`:''}
+            ${opt.bookingUrl?`<a href="${opt.bookingUrl}" target="_blank" class="book-btn" style="margin-top:8px;display:inline-flex;font-size:var(--fs-xs);">🔗 예약하기</a>`:''}
+          </div>`;
+        }).join('')}
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 /* ════════════════════════════════════════════════
