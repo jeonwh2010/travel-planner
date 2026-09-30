@@ -1042,6 +1042,7 @@ body.ipLock{overflow:hidden}
 .ipLog .ie .src{font-size:13px}
 .ipLog .ie .dst{font-size:21px;line-height:1.35}
 .ipLog .ie:last-child .dst{font-size:25px}
+.ipLog .ie.err .dst,.ipLog .ie.err:last-child .dst{font-size:14px;line-height:1.5;font-weight:500;white-space:pre-line;overflow-wrap:anywhere}
 .ipEmpty{margin:auto;text-align:center;display:flex;flex-direction:column;gap:8px;padding:0 10px;word-break:keep-all;overflow-wrap:anywhere}
 .ipEmpty b{font-size:24px;line-height:1.3}
 .ipEmpty span{color:var(--sub);font-size:15px}
@@ -1093,7 +1094,7 @@ body.ipLock{overflow:hidden}
 .lvQ{font-size:13px;color:rgba(255,255,255,.72);word-break:keep-all;overflow-wrap:anywhere}
 .lvA{font-size:18px;line-height:1.4;font-weight:600;margin-top:2px;word-break:keep-all;overflow-wrap:anywhere}
 .lvX.auto .lvA{margin-top:0;font-size:17px}
-.lvX.err .lvA{color:#ffb4ab;font-size:14px;font-weight:500}
+.lvX.err .lvA{color:#ffb4ab;font-size:14px;font-weight:500;white-space:pre-line}
 .lvHint{text-align:center;display:flex;flex-direction:column;gap:6px}
 .lvHint b{font-size:19px}
 .lvHint span{font-size:14px;color:rgba(255,255,255,.85)}
@@ -1197,7 +1198,7 @@ const LANGS=[['ko-KR','한국어','Korean'],['en-US','영어','English'],['ja-JP
   ['zh-TW','중국어(번체)','Traditional Chinese'],['es-ES','스페인어','Spanish'],['fr-FR','프랑스어','French'],['de-DE','독일어','German'],
   ['it-IT','이탈리아어','Italian'],['pt-BR','포르투갈어(브라질)','Brazilian Portuguese'],['ru-RU','러시아어','Russian'],['th-TH','태국어','Thai'],
   ['vi-VN','베트남어','Vietnamese'],['id-ID','인도네시아어','Indonesian'],['ar-SA','아랍어','Arabic'],['tr-TR','튀르키예어','Turkish']];
-const SET_DEFAULT={gemKey:'',gemModel:'gemini-3.8-flash',gemOk:false,tts:true,useCtx:true,useLoc:false,useFrame:true,langA:'ko-KR',langB:'en-US',liveEvery:15,sites:[],siteOrder:[]};
+const SET_DEFAULT={gemKey:'',gemModel:'gemini-3.8-flash',gemOk:false,tts:true,useCtx:true,useLoc:false,useFrame:true,langA:'ko-KR',langB:'en-US',liveEvery:30,sites:[],siteOrder:[]};
 
 /* ===================== 유틸 ===================== */
 const $=(s,r=document)=>r.querySelector(s);
@@ -1379,7 +1380,7 @@ function loadAll(){
     ST.siteOrder=(Array.isArray(ST.siteOrder)?ST.siteOrder:[]).map(String);
     if(!LANGS.some(l=>l[0]===ST.langA))ST.langA='ko-KR';
     if(!LANGS.some(l=>l[0]===ST.langB))ST.langB='en-US';
-    ST.liveEvery=[10,15,30,60].includes(+ST.liveEvery)?+ST.liveEvery:15;
+    ST.liveEvery=[15,30,60,120].includes(+ST.liveEvery)?+ST.liveEvery:30;
     ST.gemKey=String(ST.gemKey||'');ST.gemModel=String(ST.gemModel||SET_DEFAULT.gemModel);
   }catch(e){ST=Object.assign({},SET_DEFAULT,{sites:[],siteOrder:[]})}
   return msg;
@@ -1962,7 +1963,7 @@ function openHelp(){
     <div class="fcard"><h4>🗓 일정</h4><p>날짜 칩을 누르면 그날로 이동해요. 카드에서 길찾기·지도·캘린더(.ics)·첨부파일·편집·삭제를 할 수 있어요.</p></div>
     <div class="fcard"><h4>🗺 오버뷰</h4><p>그날 일정을 지도에 번호 핀으로 보여줘요. [이전][지금][다음]으로 캐릭터를 움직여 보세요. 핀을 누르면 일정 카드로 이동해요.</p></div>
     <div class="fcard"><h4>✨ AI 가이드</h4><p>Gemini API 키를 연결하면 카메라에 보이는 유적지·장소·메뉴판을 설명해 주고, 궁금한 걸 대화로 물어볼 수 있어요. 🌐 실시간 통역을 누르면 전체 화면이 열려요. 한국어로 말하면 바로 상대 언어로 통역해서 읽어 주고, [👂 상대 말 듣기]로 바꾸면 상대 말을 한국어로 알려 줘요.</p></div>
-    <div class="fcard"><h4>🎥 라이브 가이드</h4><p>[🎥 라이브]를 누르면 카메라가 전체 화면으로 열려요. 말로 물어보면 지금 보이는 화면을 함께 보고 바로 답해 줘요. [👁 자동 설명]을 켜면 10~60초마다 화면에 새로 보이는 것을 알려 줘요(바뀐 게 없으면 말하지 않아요). 질문할 때와 자동 설명 때 화면이 Gemini로 전송돼요. 저장하지 않아요.</p></div>
+    <div class="fcard"><h4>🎥 라이브 가이드</h4><p>[🎥 라이브]를 누르면 카메라가 전체 화면으로 열려요. 말로 물어보면 지금 보이는 화면을 함께 보고 바로 답해 줘요. [👁 자동 설명]을 켜면 15~120초(기본 30초)마다 화면에 새로 보이는 것을 알려 줘요(바뀐 게 없으면 말하지 않아요). 질문할 때와 자동 설명 때 화면이 Gemini로 전송돼요. 저장하지 않아요. 자동 설명은 요청을 많이 써서, 무료 등급에서는 사용 한도에 걸릴 수 있어요(걸리면 자동으로 꺼지고 이유를 알려 드려요).</p></div>
     <div class="fcard"><h4>🧳 AI 일정 도우미</h4><p>아래 입력 바를 누르고 “2일차 점심 빼줘”처럼 말하면 AI가 바뀔 내용을 먼저 보여줘요. 고른 것만 적용하고, 되돌릴 수도 있어요. [✨ AI로 새 여행 만들기]는 여행지·기간만 말하면 일정 초안을 만들어 줘요. Gemini API 키가 필요해요.</p></div>
     <div class="fcard"><h4>🧳 예약은 여기서</h4><p>스카이스캐너·트립닷컴·아고다·부킹닷컴 등 예약 사이트로 바로 연결돼요. 원하는 사이트는 직접 추가할 수 있어요.</p></div>
     <div class="fcard"><h4>⏰ 알람</h4><p>일정에 알람 시간을 넣으면 앱이 열려 있을 때 팝업·소리·알림으로 알려줘요. 폰 알람은 [캘린더]로 내보내세요.</p></div>
@@ -2265,6 +2266,78 @@ const SYSTEM_GUIDE=`당신은 여행지에서 사용자와 함께 다니는 친�
 - 의료·법률 판단은 하지 말고, 안전과 관련된 조언은 신중하게 하세요.
 - 특별한 요청이 없으면 8문장 이내로 답하세요.`;
 
+/* ---------- 한도(429) 해석 ----------
+   구글은 429 본문에 한도 종류·숫자·재시도 시간을 담아 보내요. 앞부분만 자르면 이 정보가 사라지므로 전부 읽어서 쉬운 말로 풀어 줘요.
+   (details의 QuotaFailure·RetryInfo 형식은 구글 문서에 예시가 없어, 없으면 본문 문장에서 찾고 그래도 없으면 '알 수 없음'으로 보여요.) */
+const QUOTA={until:0};
+function reqDayKey(){   // 구글의 하루 한도는 미국 태평양시 자정에 초기화돼요
+  try{return new Intl.DateTimeFormat('en-CA',{timeZone:'America/Los_Angeles',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
+  catch(e){return new Date().toISOString().slice(0,10)}
+}
+function reqCount(add){   // 이 앱이 오늘 보낸 요청 수(이 기기 기준, 구글의 집계와 다를 수 있어요)
+  try{
+    const k='travelPlanner.reqCount.v1',d=reqDayKey();
+    let o=null;try{o=JSON.parse(localStorage.getItem(k)||'null')}catch(e){}
+    if(!o||o.d!==d)o={d,n:0};
+    if(add){o.n+=add;localStorage.setItem(k,JSON.stringify(o))}
+    return o.n;
+  }catch(e){return 0}
+}
+function ptResetLeft(){   // 다음 태평양시 자정까지 남은 초
+  try{
+    const p=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'}).formatToParts(new Date());
+    const g=t=>+((p.find(x=>x.type===t)||{}).value)||0;
+    const h=g('hour')%24;
+    return 86400-(h*3600+g('minute')*60+g('second'));
+  }catch(e){return 0}
+}
+function quotaInfo(j){
+  const e=(j&&j.error)||{},m=String(e.message||'');
+  const o={kind:'',limit:'',model:'',retry:0,free:false};
+  const det=Array.isArray(e.details)?e.details:[];
+  det.forEach(d=>{
+    if(!d||typeof d!=='object')return;
+    (Array.isArray(d.violations)?d.violations:[]).forEach(v=>{
+      if(!v||typeof v!=='object')return;
+      const id=String(v.quotaId||''),mt=String(v.quotaMetric||'');
+      if(/PerDay/i.test(id))o.kind='day';else if(/PerMinute/i.test(id)&&!o.kind)o.kind='minute';
+      if(v.quotaValue&&!o.limit)o.limit=String(v.quotaValue);
+      if(/FreeTier/i.test(id)||/free_tier/i.test(mt))o.free=true;
+    });
+    if(d.retryDelay){const s=parseFloat(String(d.retryDelay));if(s>0&&!o.retry)o.retry=Math.ceil(s)}
+  });
+  let x;
+  if(!o.retry&&(x=/retry in\s*([\d.]+)\s*s/i.exec(m)))o.retry=Math.ceil(parseFloat(x[1]));
+  if(!o.limit&&(x=/limit:\s*(\d+)/i.exec(m)))o.limit=x[1];
+  if((x=/model:\s*([\w.\-]+)/i.exec(m)))o.model=x[1];
+  if(/free_tier/i.test(m))o.free=true;
+  if(!o.kind){if(/per\s*day|daily|PerDay/i.test(m))o.kind='day';else if(/per\s*minute|PerMinute/i.test(m))o.kind='minute'}
+  return o;
+}
+function fmtLeft(s){const h=Math.floor(s/3600),mi=Math.floor((s%3600)/60);return h?`약 ${h}시간 ${mi}분`:`약 ${Math.max(1,mi)}분`}
+function quotaShort(q){
+  return q.kind==='day'?'오늘 사용 한도를 모두 썼어요'
+    :q.kind==='minute'?`1분당 한도에 걸렸어요${q.retry?` (${q.retry}초 뒤 다시)`:''}`
+    :`요청 한도를 넘었어요${q.retry?` (구글 안내: ${q.retry}초 뒤 다시)`:''}`;
+}
+function quotaMsg(j){
+  const q=quotaInfo(j),m=String((j&&j.error&&j.error.message)||'').replace(/https?:\/\/\S+/g,'').replace(/\s+/g,' ').trim();
+  const L=['요청 한도를 넘었어요(429). 앱이나 키 고장이 아니라 구글이 정한 사용량 제한이에요.'];
+  if(q.kind==='day'){
+    const left=ptResetLeft(),at=new Date(Date.now()+left*1000);
+    L.push('· 오늘(하루) 한도를 모두 썼어요.'+(left?` 한국 시간 ${at.toLocaleTimeString('ko-KR',{hour:'numeric',minute:'2-digit'})}경(${fmtLeft(left)} 뒤)에 초기화돼요.`:''));
+  }else if(q.kind==='minute'){
+    L.push(`· 1분당 한도에 걸렸어요.${q.retry?` ${q.retry}초쯤 뒤에 다시 말씀해 주세요.`:' 잠시 뒤에 다시 해 주세요.'}`);
+  }else L.push('· 하루 한도인지 1분당 한도인지 구글이 알려 주지 않았어요.'+(q.retry?` 구글은 ${q.retry}초 뒤에 다시 시도하라고만 했어요(하루 한도여도 이런 안내가 올 수 있어요).`:'')+' 아래 원문을 봐 주세요.');
+  const bits=[];
+  if(q.limit)bits.push(`한도 ${q.limit}회`);if(q.model)bits.push(`모델 ${q.model}`);if(q.free)bits.push('무료 등급');
+  if(bits.length)L.push('· '+bits.join(' · '));
+  const n=reqCount();
+  if(n)L.push(`· 이 앱이 오늘(미국 태평양시 기준) 보낸 요청: ${n}회`);
+  if(m)L.push('(구글 원문: '+m.slice(0,420)+')');
+  return L.join('\n');
+}
+
 /* ---------- 오류 메시지 ---------- */
 function apiErrMsg(status,j){
   const m=(j&&j.error&&j.error.message)||'';
@@ -2274,7 +2347,7 @@ function apiErrMsg(status,j){
   if(status===401||status===403)return '키 권한이 없거나 이 지역·프로젝트에서 사용할 수 없어요('+status+').'+raw;
   if(status===404)return '모델을 찾을 수 없어요. 연결 설정에서 [모델 목록 불러오기]로 사용 가능한 모델을 골라 주세요.'+raw;
   if(status===402)return '구글 쪽 결제(선불 크레딧) 문제예요(402). AI Studio에서 크레딧을 충전하거나, 해당 프로젝트의 결제를 해제해 무료 등급으로 쓰세요. 앱이나 키의 문제가 아니에요.'+raw;
-  if(status===429)return '요청이 너무 많거나 사용 한도를 넘었어요. 잠시 후 다시 시도해 주세요.'+raw;
+  if(status===429)return quotaMsg(j);
   if(status===503)return 'Gemini 서버가 잠시 붐벼요(503). 자동으로 다시 시도했지만 안 됐어요. 1~2분 뒤 다시 눌러 보시고, 계속되면 [연결 설정]에서 다른 모델로 바꿔 보세요.'+raw;
   if(status>=500)return 'Gemini 서버 오류예요. 잠시 후 다시 시도해 주세요.'+raw;
   return `요청에 실패했어요(${status}).`+raw;
@@ -2294,8 +2367,15 @@ async function gemCall(body,o){
   if(!ST.gemKey)throw new Error('먼저 Gemini API 키를 연결해 주세요.');
   const model=String(ST.gemModel||SET_DEFAULT.gemModel).replace(/^models\//,'');
   const retries=o.retries==null?2:o.retries;
+  /* 구글이 '몇 초 뒤에 다시'라고 한 1분당 한도 대기 중에는 요청을 보내지 않아요(보내 봐야 다시 거절되고 횟수만 늘어요) */
+  if(Date.now()<QUOTA.until){
+    const s=Math.max(1,Math.ceil((QUOTA.until-Date.now())/1000));
+    const er=new Error(`구글이 ${s}초쯤 뒤에 다시 시도하라고 해서 잠시 쉬는 중이에요. 그때 다시 말씀해 주세요. (요청을 보내지 않았어요)`);
+    er.status=429;er.quota={kind:'',retry:s,local:true};er.short=`구글 안내에 따라 대기 중 (${s}초)`;er.rawMsg='';throw er;
+  }
   let r,j;
   for(let n=0;;n++){
+    reqCount(1);
     try{r=await fetchT(`${GEM}/models/${encodeURIComponent(model)}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':ST.gemKey},body:JSON.stringify(body)},o.ms||60000)}
     catch(e){throw await netFail(e)}
     j=null;try{j=await r.json()}catch(e){}
@@ -2303,7 +2383,14 @@ async function gemCall(body,o){
     if(o.onRetry){try{o.onRetry(n+1,retries,r.status)}catch(e){}}
     await sleep(1500*(n+1)+(n?1000:0));
   }
-  if(!r.ok){const er=new Error(apiErrMsg(r.status,j));er.status=r.status;er.rawMsg=(j&&j.error&&j.error.message)||'';throw er}
+  if(!r.ok){
+    const er=new Error(apiErrMsg(r.status,j));er.status=r.status;er.rawMsg=(j&&j.error&&j.error.message)||'';
+    if(r.status===429){
+      const q=quotaInfo(j);er.quota=q;er.short=quotaShort(q);
+      if(q.kind!=='day'&&q.retry>0)QUOTA.until=Date.now()+Math.min(q.retry,120)*1000+500;
+    }
+    throw er;
+  }
   const c=j&&j.candidates&&j.candidates[0];
   const parts=c&&c.content&&Array.isArray(c.content.parts)?c.content.parts:[];
   const text=parts.filter(p=>p&&typeof p.text==='string'&&!p.thought).map(p=>p.text).join('').trim();
@@ -2467,7 +2554,7 @@ async function aiKeySave(){
   if(k){const p=keyProblem(k);if(p){aiCfgMsg(p,false);return}}
   const mp=modelProblem(m);if(mp){aiCfgMsg(mp,false);return}
   if(k)ST.gemKey=k;
-  ST.gemModel=m;ST.gemOk=false;saveSet();
+  ST.gemModel=m;ST.gemOk=false;QUOTA.until=0;saveSet();
   const mi=$('#ai_model');if(mi)mi.value=m;
   $('#ai_key').value='';aiStatus();aiCfgMsg('연결을 확인하는 중…');
   try{
@@ -2714,7 +2801,7 @@ Object.assign(ACT,{
 });
 Object.assign(CHG,{
   iv_b(el){ST.langB=el.value;saveSet();ipRestartAll()},
-  ai_model(el){const m=el.value.trim().replace(/^models\//,'');if(m&&m!==ST.gemModel){ST.gemModel=m;ST.gemOk=false;saveSet();aiStatus()}},
+  ai_model(el){const m=el.value.trim().replace(/^models\//,'');if(m&&m!==ST.gemModel){ST.gemModel=m;ST.gemOk=false;QUOTA.until=0;saveSet();aiStatus()}},
   fileAiPhoto(el){const f=el.files&&el.files[0];el.value='';aiPhotoPicked(f)}
 });
 
@@ -2791,7 +2878,9 @@ function ipRender(){
     return;
   }
   box.innerHTML=IP.log.map((e,i)=>`<div class="ie ${e.side}${e.err?' err':''}"><div class="src">${esc(langName(e.from))} · ${esc(e.src)}</div><div class="dst">${e.pending?'<span class="dots"><i></i><i></i><i></i></span>':esc(e.dst)}</div>${e.err||e.pending?'':`<button data-act="ipSpeak" data-i="${i}">🔊 다시 듣기</button>`}</div>`).join('');
-  box.scrollTop=box.scrollHeight;
+  const last=box.lastElementChild;   // 마지막이 긴 오류 안내면 끝이 아니라 '맨 위'부터 보이게(핵심 설명이 첫 줄에 있어요)
+  if(last&&last.classList.contains('err')&&last.offsetHeight>box.clientHeight-16){box.scrollTop=0;box.scrollTop=Math.max(0,last.getBoundingClientRect().top-box.getBoundingClientRect().top-8)}
+  else box.scrollTop=box.scrollHeight;
 }
 
 /* ---------- 번역 ---------- */
@@ -2830,7 +2919,7 @@ async function ipHandle(text,dir,gen){
 function ipFatal(er){
   IP.paused=true;IP.interim='';
   IP.msg=er==='start'?'음성 인식을 시작하지 못했어요. 가운데 버튼을 눌러 다시 시도하거나 ⌨️로 입력해 주세요.'
-    :'마이크를 쓸 수 없어요. 브라우저·휴대폰 설정에서 마이크(음성 인식)를 허용한 뒤 가운데 버튼을 눌러 주세요. ⌨️로 입력해도 돼요.';
+    :`마이크를 쓸 수 없어요 (오류 코드: ${er}). 브라우저·휴대폰 설정에서 마이크(음성 인식)를 허용한 뒤 가운데 버튼을 눌러 주세요. ⌨️로 입력해도 돼요.`;
   ipState();
 }
 function ipAgain(gen){
@@ -2937,7 +3026,7 @@ if(window.visualViewport){visualViewport.addEventListener('resize',ipVV);visualV
 /* ===================== 라이브 가이드 (전체 화면 카메라 + 음성 대화 + 자동 설명) =====================
    [🎥 라이브]를 누르면 카메라 화면이 전체 화면으로 열리고 바로 듣기 시작해요.
    · 💬 대화: 말로 물어보면, 말이 끝나는 즉시 '지금 보이는 화면'과 함께 Gemini에 물어 답을 보여 주고 읽어 줘요. 그다음 자동으로 다시 들어요.
-   · 👁 자동 설명: 설정한 간격(10·15·30·60초)마다 화면을 살펴 새로 보이는 것을 알려 줘요. 화면이 거의 안 바뀌었거나
+   · 👁 자동 설명: 설정한 간격(15·30·60·120초, 기본 30초)마다 화면을 살펴 새로 보이는 것을 알려 줘요. 화면이 거의 안 바뀌었거나
      이미 말한 내용이면 말하지 않아요(① 작은 그림으로 바뀐 정도를 비교 ② Gemini가 SKIP으로 답하면 조용히 넘어가요). 말로 질문도 계속 할 수 있어요.
    · 이 방식은 Gemini의 '실시간 음성 스트리밍(Live API)'이 아니라, 브라우저 음성 인식 + 사진 한 장씩 보내는 방식이라 말이 끝난 뒤 답이 와요.
    · 음성 인식 루프는 통역(55_interp.js)과 같은 방식: 한 문장씩(continuous=false) 인식 → 끝나면 새로 시작, 1.1초 글자가 안 늘면 문장 끝,
@@ -2946,7 +3035,7 @@ if(window.visualViewport){visualViewport.addEventListener('resize',ipVV);visualV
 const LV={open:false,auto:false,busy:false,nbusy:false,paused:false,speaking:false,kb:false,noCam:false,fails:0,gen:0,nerr:0,
   interim:'',msg:'',stream:null,hist:[],log:[],thumb:null,lastNarr:0,timer:0,
   cfg:{endMs:1100,wdMs:15000,gapMs:250,diffMin:10,tickMs:1000,everyMs:0,errBackMs:20000}};
-const LV_EVERY=[10,15,30,60];
+const LV_EVERY=[15,30,60,120];
 const SYSTEM_LIVE=`당신은 여행자와 함께 걸으며 실시간으로 대화하는 친절한 현지 가이드입니다. 사용자는 카메라로 지금 보이는 장면을 함께 보내며 말로 질문합니다.
 - 항상 한국어 존댓말로, 소리 내어 읽기 좋은 말투로 1~3문장(길어도 4문장)으로 짧게 답하세요. 글머리표·마크다운·이모지·주소(URL)는 쓰지 마세요.
 - 화면에 보이는 것(유적지·건물·간판·메뉴·음식·표지판 등)을 근거로 답하세요. 화면과 위치만으로 확실히 알 수 없으면 추측하지 말고 "확실하지 않아요"라고 말한 뒤 보이는 근거를 말하세요.
@@ -3049,7 +3138,9 @@ function lvRender(){
   box.innerHTML=LV.log.slice(-4).map(e=>e.kind==='auto'
     ?`<div class="lvX auto${e.err?' err':''}"><div class="lvA">${e.err?'':'👁 '}${esc(e.a)}</div></div>`
     :`<div class="lvX${e.err?' err':''}"><div class="lvQ">🗣 ${esc(e.q)}</div><div class="lvA">${e.pending?'<span class="dots"><i></i><i></i><i></i></span>':esc(e.a)}</div></div>`).join('');
-  box.scrollTop=box.scrollHeight;
+  const last=box.lastElementChild;   // 마지막이 긴 오류 안내면 '맨 위'부터 보이게
+  if(last&&last.classList.contains('err')&&last.offsetHeight>box.clientHeight-8){box.scrollTop=0;box.scrollTop=Math.max(0,last.getBoundingClientRect().top-box.getBoundingClientRect().top-4)}
+  else box.scrollTop=box.scrollHeight;
 }
 
 /* ---------- 카메라 ---------- */
@@ -3146,7 +3237,9 @@ async function lvNarrate(){
   }catch(err){
     LV.nerr++;LV.lastNarr=Date.now()+LV.cfg.errBackMs-lvEveryMs();                 // 실패하면 잠시 쉬었다 다시
     if(LV.open&&gen===LV.gen){
-      if(LV.nerr>=3){LV.auto=false;LV.nerr=0;LV.log.push({kind:'auto',q:'',a:'자동 설명을 껐어요: '+(err.message||'오류'),err:true});lvLabels()}
+      if(err.status===429){                                                          // 한도 초과면 더 보내지 않고 바로 끔
+        LV.auto=false;LV.nerr=0;LV.log.push({kind:'auto',q:'',a:'자동 설명을 껐어요: '+(err.short||'요청 한도를 넘었어요')+'. 자동 설명은 요청을 많이 써요.',err:true});lvLabels();
+      }else if(LV.nerr>=3){LV.auto=false;LV.nerr=0;LV.log.push({kind:'auto',q:'',a:'자동 설명을 껐어요: '+(err.message||'오류'),err:true});lvLabels()}
       else LV.log.push({kind:'auto',q:'',a:err.message||'오류',err:true});
       lvRender();
     }
@@ -3164,7 +3257,7 @@ function lvTick(){
 function lvFatal(er){
   LV.paused=true;LV.interim='';
   LV.msg=er==='start'?'음성 인식을 시작하지 못했어요. 가운데 버튼을 눌러 다시 시도하거나 ⌨️로 질문해 주세요.'
-    :'마이크를 쓸 수 없어요. 브라우저·휴대폰 설정에서 마이크(음성 인식)를 허용한 뒤 가운데 버튼을 눌러 주세요. ⌨️로 질문해도 돼요.';
+    :`마이크를 쓸 수 없어요 (오류 코드: ${er}). 브라우저·휴대폰 설정에서 마이크(음성 인식)를 허용한 뒤 가운데 버튼을 눌러 주세요. ⌨️로 질문해도 돼요.`;
   lvState();
 }
 function lvAgain(gen){
@@ -3948,7 +4041,7 @@ function boot(){
   if(msg)toast(msg,6000);
   S.trips.forEach(t=>t.items.forEach(it=>{if(geoNeed(it)&&geo.q.length<30)geoQueue(t.id,it.id)}));
   alarmCheck();setInterval(alarmCheck,15000);
-  window.__tp={S:()=>S,ST:()=>ST,ov,V,AI,IP,LV,geo,fetchT};
+  window.__tp={S:()=>S,ST:()=>ST,ov,V,AI,IP,LV,geo,fetchT,QUOTA,quotaInfo,quotaMsg,reqCount,ptResetLeft};
 }
 function onGeo(){if(V.page==='ov')ovBuild(true)}
 boot();
